@@ -1,46 +1,43 @@
 // src/App.tsx
 import React, { useState } from "react";
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 import CustomDrawer from "./components/CustomDrawer";
 import FormRenderer from "./components/FormRenderer";
-import { schema } from "./forms/schema"; // Premier set de données
-import { uischema } from "./forms/uischema"; // Premier set de données
-import { schema2 } from "./forms/schema2"; // Deuxième set de données
-import { uischema2 } from "./forms/uischema2"; // Deuxième set de données
+import { schema } from "./forms/schema"; // Schéma pour les fichiers récents
+import { uischema } from "./forms/uischema"; // UI schema pour les fichiers récents
+import { schema2 } from "./forms/schema2"; // Schéma pour les fichiers partagés
+import { uischema2 } from "./forms/uischema2"; // UI schema pour les fichiers partagés
 
 const { Content } = Layout;
 
 const App: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [selectedForm, setSelectedForm] = useState<string>("form1");
+  const [selectedForm, setSelectedForm] = useState<string>("recent"); // État pour le formulaire sélectionné
 
-  const showDrawer = () => setDrawerVisible(true);
-  const closeDrawer = () => setDrawerVisible(false);
+  const toggleDrawer = () => setDrawerVisible(!drawerVisible); // Fonction pour ouvrir/fermer le drawer
 
   // Configuration des formulaires
   const formConfigs: Record<string, { schema: any; uischema: any }> = {
-    form1: { schema: schema, uischema: uischema }, // Formulaire 1
-    form2: { schema: schema, uischema: uischema }, // Formulaire 2 (même schéma que form1)
-    form3: { schema: schema, uischema: uischema }, // Formulaire 3 (même schéma que form1)
-    form4: { schema: schema2, uischema: uischema2 }, // Formulaire 4
-    form5: { schema: schema2, uischema: uischema2 }, // Formulaire 5 (même schéma que form4)
+    recent: { schema: schema, uischema: uischema }, // Formulaire pour les fichiers récents
+    shared: { schema: schema2, uischema: uischema2 }, // Formulaire pour les fichiers partagés
+    trash: { schema: schema, uischema: uischema }, // Formulaire pour la corbeille (exemple)
+    drive: { schema: schema, uischema: uischema }, // Formulaire pour Mon Drive (exemple)
+    external: { schema: schema2, uischema: uischema2 }, // Formulaire pour les partages externes (exemple)
   };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Button type="primary" onClick={showDrawer} style={{ margin: 16 }}>
-        Ouvrir le menu
-      </Button>
-
       <CustomDrawer
         visible={drawerVisible}
-        onClose={closeDrawer}
+        onClose={toggleDrawer} // Fermer le drawer
         selectedKey={selectedForm}
-        onSelect={setSelectedForm}
+        onSelect={setSelectedForm} // Mettre à jour le formulaire sélectionné
+        toggleDrawer={toggleDrawer} // Passer la fonction pour ouvrir/fermer le drawer
       />
 
       <Layout>
-        <Content style={{ padding: "20px" }}>
+        <Content style={{ padding: "20px", marginLeft: drawerVisible ? "250px" : "0", transition: "margin-left 0.2s" }}>
+          {/* Afficher le formulaire correspondant à la catégorie sélectionnée */}
           <FormRenderer {...formConfigs[selectedForm]} />
         </Content>
       </Layout>
