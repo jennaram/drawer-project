@@ -1,8 +1,8 @@
-export const schema2 = {
-    type: "object",
-    properties: {
-      email: { type: "string", format: "email", title: "Email" },
-      password: { type: "string", title: "Mot de passe" },
-    }
-  };
-  
+export const schema = {
+  type: "object",
+  properties: {
+    photoTitle: { type: "string", title: "Titre de la photo" },
+    uploadDate: { type: "string", format: "date", title: "Date d'upload" },
+    description: { type: "string", title: "Description" },
+  },
+};

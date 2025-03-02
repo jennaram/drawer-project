@@ -1,8 +1,8 @@
-export const uischema2 = {
-    type: "VerticalLayout",
-    elements: [
-      { type: "Control", scope: "#/properties/email" },
-      { type: "Control", scope: "#/properties/password" }
-    ]
-  };
-  
+export const uischema = {
+  type: "VerticalLayout",
+  elements: [
+    { type: "Control", scope: "#/properties/photoTitle" },
+    { type: "Control", scope: "#/properties/uploadDate" },
+    { type: "Control", scope: "#/properties/description" },
+  ],
+};
