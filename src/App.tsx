@@ -20,9 +20,9 @@ const App: React.FC = () => {
   const formConfigs: Record<string, { schema: any; uischema: any }> = {
     recent: { schema: schema, uischema: uischema }, // Formulaire pour les fichiers récents
     shared: { schema: schema2, uischema: uischema2 }, // Formulaire pour les fichiers partagés
-    trash: { schema: schema, uischema: uischema }, // Formulaire pour la corbeille (exemple)
-    drive: { schema: schema, uischema: uischema }, // Formulaire pour Mon Drive (exemple)
-    external: { schema: schema2, uischema: uischema2 }, // Formulaire pour les partages externes (exemple)
+    trash: { schema: schema, uischema: uischema }, // Formulaire pour la corbeille
+    drive: { schema: schema, uischema: uischema }, // Formulaire pour Mon Drive
+    external: { schema: schema2, uischema: uischema2 }, // Formulaire pour les partages externes
   };
 
   return (

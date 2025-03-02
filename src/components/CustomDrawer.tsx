@@ -58,12 +58,16 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
             <div style={{ padding: "16px 24px", fontWeight: "bold" }}>
               {section.title}
             </div>
+
             <Menu
-              mode="inline"
-              selectedKeys={[selectedKey]}
-              onClick={({ key }) => onSelect(key.toString())} // Transmettre la clé sélectionnée
-              items={section.items}
-            />
+  mode="inline"
+  selectedKeys={[selectedKey]}
+  onClick={({ key }) => {
+    console.log("Selected Key:", key); // Log pour déboguer
+    onSelect(key.toString()); // Transmettre la clé sélectionnée
+  }}
+  items={section.items}
+/>
           </div>
         ))}
       </Drawer>
