@@ -20,7 +20,7 @@ const { Header, Content, Footer } = Layout;
 
 const App: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [selectedForm, setSelectedForm] = useState<string | null>(null); // ✅ Met par défaut à null
+  const [selectedForm, setSelectedForm] = useState<string | null>(null); //  Met par défaut à null
 
   const toggleDrawer = () => setDrawerVisible(!drawerVisible); // Fonction pour ouvrir/fermer le drawer
 
@@ -45,9 +45,9 @@ const App: React.FC = () => {
           padding: "0 24px",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           height: "200px",
-          cursor: "pointer", // ✅ Indique que le logo est cliquable
+          cursor: "pointer", //  Indique que le logo est cliquable
         }}
-        onClick={() => setSelectedForm(null)} // ✅ Quand on clique, affiche NewsPage
+        onClick={() => setSelectedForm(null)} //  Quand on clique, affiche NewsPage
       >
         {/* Logo cliquable */}
         <Image
@@ -73,34 +73,35 @@ const App: React.FC = () => {
           {selectedForm ? (
             <FormRenderer {...formConfigs[selectedForm]} selectedKey={selectedForm} />
           ) : (
-            <NewsPage /> // ✅ Affiche la page d'actualités si aucun formulaire n'est sélectionné
+            <NewsPage /> //  Affiche la page d'actualités si aucun formulaire n'est sélectionné
           )}
         </Content>
       </Layout>
 
-      {/* Footer */}
-      <Footer
-        style={{
-          textAlign: "center",
-          backgroundColor: "#83c5be",
-          padding: "10px 0",
-          color: "#fff",
-        }}
-      >
-        <div>© Tous droits réservés 2025 </div>
-        <a
-          href="https://www.linkedin.com/in/jennabenufferamia/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            src="/linkedin-logo.svg"
-            alt="LinkedIn"
-            preview={false}
-            style={{ width: "24px", height: "24px", marginTop: "5px" }}
-          />
-        </a>
-      </Footer>
+     {/* Footer */}
+<Footer
+  style={{
+    textAlign: "center",
+    backgroundColor: "#83c5be",
+    padding: "10px 0",
+    color: "#fff",
+  }}
+>
+  <div style={{ fontSize: "18px", fontWeight: "bold" }}>© Tous droits réservés 2025</div>
+  <a
+    href="https://www.linkedin.com/in/jennabenufferamia/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Image
+      src="/linkedin-logo.svg"
+      alt="LinkedIn"
+      preview={false}
+      style={{ width: "24px", height: "24px", marginTop: "5px" }}
+    />
+  </a>
+</Footer>
+
     </Layout>
   );
 };

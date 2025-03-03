@@ -9,7 +9,7 @@ interface CustomDrawerProps {
   visible: boolean;
   onClose: () => void;
   selectedKey: string;
-  onSelect: (key: string | null) => void; // ✅ Accepte null pour afficher NewsPage
+  onSelect: (key: string | null) => void; //  Accepte null pour afficher NewsPage
   toggleDrawer: () => void;
 }
 
@@ -94,8 +94,8 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
           mode="inline"
           selectedKeys={[selectedKey]}
           onClick={({ key }) => {
-            onSelect(key === "home" ? null : key); // ✅ "home" -> NewsPage
-            onClose(); // ✅ Ferme le drawer après sélection
+            onSelect(key === "home" ? null : key); // "home" -> NewsPage
+            onClose(); //  Ferme le drawer après sélection
           }}
           items={[
             {
