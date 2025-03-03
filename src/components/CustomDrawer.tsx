@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Drawer, Menu, Button, Typography } from "antd";
-import { ArrowLeftOutlined, ArrowRightOutlined, LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined, LoginOutlined, LogoutOutlined, HomeOutlined } from "@ant-design/icons";
 import { drawerConfig } from "../config/drawerConfig";
 
 const { Text } = Typography;
@@ -9,7 +9,7 @@ interface CustomDrawerProps {
   visible: boolean;
   onClose: () => void;
   selectedKey: string;
-  onSelect: (key: string) => void;
+  onSelect: (key: string | null) => void; // ✅ Accepte null pour afficher NewsPage
   toggleDrawer: () => void;
 }
 
@@ -46,10 +46,10 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#83c5be", // Couleur de fond du bouton
+          backgroundColor: "#83c5be",
           borderRadius: "50%",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-          border: "none", // Supprimer la bordure par défaut
+          border: "none",
         }}
       />
 
@@ -70,10 +70,10 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
           style={{
             marginBottom: "16px",
             width: "100%",
-            backgroundColor: "#83c5be", // Couleur de fond du bouton
-            borderColor: "#83c5be", // Couleur de la bordure
-            color: "#fff", // Couleur du texte
-            fontWeight: "bold", // Texte en gras
+            backgroundColor: "#83c5be",
+            borderColor: "#83c5be",
+            color: "#fff",
+            fontWeight: "bold",
           }}
         >
           {isLoggedIn ? "Déconnexion" : "Connexion"}
@@ -89,20 +89,25 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
           </div>
         )}
 
-        {/* Menu des catégories */}
-        {drawerConfig.map((section, index) => (
-          <div key={index}>
-            <div style={{ padding: "16px 24px", fontWeight: "bold" }}>
-              {section.title}
-            </div>
-            <Menu
-              mode="inline"
-              selectedKeys={[selectedKey]}
-              onClick={({ key }) => onSelect(key.toString())}
-              items={section.items}
-            />
-          </div>
-        ))}
+        {/* Lien Accueil */}
+        <Menu
+          mode="inline"
+          selectedKeys={[selectedKey]}
+          onClick={({ key }) => {
+            onSelect(key === "home" ? null : key); // ✅ "home" -> NewsPage
+            onClose(); // ✅ Ferme le drawer après sélection
+          }}
+          items={[
+            {
+              key: "home",
+              icon: <HomeOutlined />,
+              label: "Accueil",
+            },
+            ...drawerConfig.flatMap((section) =>
+              section.items.map((item) => ({ ...item }))
+            ),
+          ]}
+        />
       </Drawer>
     </>
   );

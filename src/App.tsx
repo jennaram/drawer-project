@@ -4,7 +4,6 @@ import CustomDrawer from "./components/CustomDrawer";
 import FormRenderer from "./components/FormRenderer";
 import NewsPage from "./components/NewsPage";
 
-
 // Import des schémas et UI schémas pour chaque catégorie
 import { schema as schema1 } from "./forms/schema"; // Schéma pour "Profil enfant"
 import { uischema as uischema1 } from "./forms/uischema"; // UI schema pour "Profil enfant"
@@ -41,24 +40,32 @@ const App: React.FC = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center", // Centrer horizontalement
-          backgroundColor: "#83c5be", // Couleur de fond
-          padding: "0 24px", // Espacement horizontal
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Ombre légère
-          height: "200px", // Hauteur du header (augmentée pour s'adapter au logo)
+          justifyContent: "center",
+          backgroundColor: "#83c5be",
+          padding: "0 24px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+          height: "200px",
+          cursor: "pointer", // ✅ Indique que le logo est cliquable
         }}
+        onClick={() => setSelectedForm(null)} // ✅ Quand on clique, affiche NewsPage
       >
-        {/* Logo */}
+        {/* Logo cliquable */}
         <Image
-          src="/logo_schoolconnect.png" // Chemin vers le logo dans le dossier public
+          src="/logo_schoolconnect.png"
           alt="Logo SchoolConnect"
-          preview={false} // Désactiver la prévisualisation
-          style={{ width: "192px", height: "192px" }} // Taille du logo (3 fois plus gros)
+          preview={false}
+          style={{ width: "192px", height: "192px" }}
         />
       </Header>
 
       {/* Drawer latéral */}
-      <CustomDrawer visible={drawerVisible} onClose={toggleDrawer} selectedKey={selectedForm ?? ""} onSelect={setSelectedForm} toggleDrawer={toggleDrawer} />
+      <CustomDrawer 
+        visible={drawerVisible} 
+        onClose={toggleDrawer} 
+        selectedKey={selectedForm ?? ""} 
+        onSelect={setSelectedForm} 
+        toggleDrawer={toggleDrawer} 
+      />
 
       {/* Contenu principal */}
       <Layout>
@@ -75,9 +82,9 @@ const App: React.FC = () => {
       <Footer
         style={{
           textAlign: "center",
-          backgroundColor: "#83c5be", // Même couleur que le header
-          padding: "10px 0", // Espacement vertical
-          color: "#fff", // Couleur du texte
+          backgroundColor: "#83c5be",
+          padding: "10px 0",
+          color: "#fff",
         }}
       >
         <div>© Tous droits réservés 2025 </div>
@@ -87,12 +94,11 @@ const App: React.FC = () => {
           rel="noopener noreferrer"
         >
           <Image
-  src="/linkedin-logo.svg"
-  alt="LinkedIn"
-  preview={false}
-  style={{ width: "24px", height: "24px", marginTop: "5px" }}
-/>
-
+            src="/linkedin-logo.svg"
+            alt="LinkedIn"
+            preview={false}
+            style={{ width: "24px", height: "24px", marginTop: "5px" }}
+          />
         </a>
       </Footer>
     </Layout>
