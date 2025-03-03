@@ -1,10 +1,8 @@
 import React from "react";
-import { JsonForms } from "@jsonforms/react";
-import { materialRenderers } from "@jsonforms/material-renderers";
 import { UserOutlined, LockOutlined, ProfileOutlined, MailOutlined, KeyOutlined } from "@ant-design/icons";
-import { Typography, Card } from "antd"; // Importez Card pour un conteneur stylisé
+import { Typography, Card, List } from "antd";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface FormRendererProps {
   schema: any;
@@ -22,7 +20,86 @@ const FormRenderer: React.FC<FormRendererProps> = ({ schema, uischema, selectedK
     external: { title: "Activités", icon: <KeyOutlined /> },
   };
 
-  const { title, icon } = formTitles[selectedKey] || { title: "Formulaire", icon: null };
+  const { title, icon } = formTitles[selectedKey] || { title: "Contenu", icon: null };
+
+  // Données factices pour la liste des photos
+  const photos = [
+    { id: 1, name: "Photo de l'élève", url: "/photo_eleve.png" },
+  ];
+
+  // Contenu dynamique en fonction de la clé sélectionnée
+  const renderContent = () => {
+    switch (selectedKey) {
+      case "recent":
+        return (
+          <div>
+            <Text strong>Informations du profil</Text>
+            <div style={{ marginTop: "8px" }}>
+              <Text>Demi-pensionnaire: Oui</Text>
+              <br />
+              <Text>Garderie du soir: Oui</Text>
+              <br />
+              <Text>Classe: Moyenne section</Text>
+            </div>
+          </div>
+        );
+      case "shared":
+        return (
+          <List
+            dataSource={photos}
+            renderItem={(photo) => (
+              <List.Item>
+                <img src={photo.url} alt={photo.name} style={{ width: "100px", height: "100px" }} />
+                <Text>{photo.name}</Text>
+              </List.Item>
+            )}
+          />
+        );
+      case "trash":
+        return (
+          <div>
+            <Text strong>Informations personnelles</Text>
+            <div style={{ marginTop: "8px" }}>
+              <Text>Date de naissance: 27 mai 2020</Text>
+              <br />
+              <Text>Nom du père: Yannis B.</Text>
+              <br />
+              <Text>Téléphone du père: +33 6 12 34 56 78</Text>
+              <br />
+              <Text>Email du père: yannis.b@example.com</Text>
+              <br />
+              <Text>Nom de la mère: Jenna B.</Text>
+              <br />
+              <Text>Téléphone de la mère: +33 6 87 65 43 21</Text>
+              <br />
+              <Text>Email de la mère: jenna.b@example.com</Text>
+              <br />
+              <Text>Adresse: 12 Rue de l'École, 75001 Paris</Text>
+            </div>
+          </div>
+        );
+      case "drive":
+        return (
+          <div>
+            <Text strong>Messagerie</Text>
+            <div style={{ marginTop: "8px" }}>
+              <Text>Aucun nouveau message.</Text>
+            </div>
+          </div>
+        );
+      case "external":
+        return (
+          <div>
+            <Text strong>Activités</Text>
+            <div style={{ marginTop: "8px" }}>
+              <Text>Aucune activité prévue.</Text>
+            </div>
+          </div>
+        );
+      default:
+        return <Text>Aucun contenu à afficher.</Text>;
+    }
+  };
 
   return (
     <Card
@@ -37,12 +114,7 @@ const FormRenderer: React.FC<FormRendererProps> = ({ schema, uischema, selectedK
         marginBottom: "24px",
       }}
     >
-      <JsonForms
-        schema={schema}
-        uischema={uischema}
-        data={{}}
-        renderers={materialRenderers}
-      />
+      {renderContent()}
     </Card>
   );
 };

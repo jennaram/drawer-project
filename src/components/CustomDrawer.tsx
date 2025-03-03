@@ -1,15 +1,16 @@
-// src/components/CustomDrawer.tsx
-import React from "react";
-import { Drawer, Menu, Button } from "antd";
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { drawerConfig } from "../config/drawerConfig"; // Import de la configuration du drawer
+import React, { useState } from "react";
+import { Drawer, Menu, Button, Typography } from "antd";
+import { ArrowLeftOutlined, ArrowRightOutlined, LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import { drawerConfig } from "../config/drawerConfig";
+
+const { Text } = Typography;
 
 interface CustomDrawerProps {
-  visible: boolean; // Visibilité du drawer
-  onClose: () => void; // Fonction pour fermer le drawer
-  selectedKey: string; // Clé sélectionnée dans le menu
-  onSelect: (key: string) => void; // Fonction pour gérer la sélection d'un élément du menu
-  toggleDrawer: () => void; // Fonction pour ouvrir/fermer le drawer
+  visible: boolean;
+  onClose: () => void;
+  selectedKey: string;
+  onSelect: (key: string) => void;
+  toggleDrawer: () => void;
 }
 
 const CustomDrawer: React.FC<CustomDrawerProps> = ({
@@ -19,12 +20,19 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
   onSelect,
   toggleDrawer,
 }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // État pour gérer la connexion
+
+  // Fonction pour gérer la connexion/déconnexion
+  const handleLoginLogout = () => {
+    setIsLoggedIn((prev) => !prev);
+  };
+
   return (
     <>
       {/* Icône flèche pour ouvrir/fermer le drawer */}
       <Button
         type="text"
-        icon={visible ? <ArrowLeftOutlined style={{ fontSize: "24px" }} /> : <ArrowRightOutlined style={{ fontSize: "24px" }} />}
+        icon={visible ? <ArrowLeftOutlined style={{ fontSize: "24px", color: "#fff" }} /> : <ArrowRightOutlined style={{ fontSize: "24px", color: "#fff" }} />}
         onClick={toggleDrawer}
         style={{
           position: "fixed",
@@ -33,14 +41,15 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
           zIndex: 1000,
           transform: "translateY(-50%)",
           transition: "left 0.2s",
-          width: "48px", // Largeur du bouton
-          height: "48px", // Hauteur du bouton
+          width: "48px",
+          height: "48px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#f0f0f0", // Couleur de fond du bouton
-          borderRadius: "50%", // Rendre le bouton circulaire
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)", // Ajouter une ombre
+          backgroundColor: "#83c5be", // Couleur de fond du bouton
+          borderRadius: "50%",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+          border: "none", // Supprimer la bordure par défaut
         }}
       />
 
@@ -50,24 +59,48 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({
         placement="left"
         onClose={onClose}
         open={visible}
-        closable={false} // Désactiver le bouton de fermeture par défaut
-        width={250} // Largeur du drawer
+        closable={false}
+        width={250}
       >
+        {/* Bouton Connexion/Déconnexion */}
+        <Button
+          type="primary"
+          icon={isLoggedIn ? <LogoutOutlined /> : <LoginOutlined />}
+          onClick={handleLoginLogout}
+          style={{
+            marginBottom: "16px",
+            width: "100%",
+            backgroundColor: "#83c5be", // Couleur de fond du bouton
+            borderColor: "#83c5be", // Couleur de la bordure
+            color: "#fff", // Couleur du texte
+            fontWeight: "bold", // Texte en gras
+          }}
+        >
+          {isLoggedIn ? "Déconnexion" : "Connexion"}
+        </Button>
+
+        {/* Afficher le nom du profil si connecté */}
+        {isLoggedIn && (
+          <div style={{ marginBottom: "16px", padding: "0 16px" }}>
+            <Text strong>Profil</Text>
+            <div style={{ marginTop: "8px" }}>
+              <Text>Ethan B.</Text>
+            </div>
+          </div>
+        )}
+
+        {/* Menu des catégories */}
         {drawerConfig.map((section, index) => (
           <div key={index}>
             <div style={{ padding: "16px 24px", fontWeight: "bold" }}>
               {section.title}
             </div>
-
             <Menu
-  mode="inline"
-  selectedKeys={[selectedKey]}
-  onClick={({ key }) => {
-    console.log("Selected Key:", key); // Log pour déboguer
-    onSelect(key.toString()); // Transmettre la clé sélectionnée
-  }}
-  items={section.items}
-/>
+              mode="inline"
+              selectedKeys={[selectedKey]}
+              onClick={({ key }) => onSelect(key.toString())}
+              items={section.items}
+            />
           </div>
         ))}
       </Drawer>
