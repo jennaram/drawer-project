@@ -8,17 +8,17 @@ const NewsPage: React.FC = () => {
     {
       title: "Sortie scolaire au zoo",
       content: "Les élèves de la maternelle ont découvert les animaux du zoo ce jeudi ! Une belle expérience enrichissante.",
-      image: "/zoo-trip.jpg",
+      image: "/zoo.jpg",
     },
     {
       title: "Journée des parents",
       content: "Nous avons organisé une journée spéciale où les parents ont pu participer aux activités en classe.",
-      image: "/parents-day.jpg",
+      image: "/eleves.jpg",
     },
     {
       title: "Atelier peinture en primaire",
       content: "Les élèves du primaire ont exploré leur créativité avec un atelier peinture coloré et amusant.",
-      image: "/painting-workshop.jpg",
+      image: "/peinture.jpg",
     },
   ];
 

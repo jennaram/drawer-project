@@ -4,6 +4,7 @@ import CustomDrawer from "./components/CustomDrawer";
 import FormRenderer from "./components/FormRenderer";
 import NewsPage from "./components/NewsPage";
 
+
 // Import des schémas et UI schémas pour chaque catégorie
 import { schema as schema1 } from "./forms/schema"; // Schéma pour "Profil enfant"
 import { uischema as uischema1 } from "./forms/uischema"; // UI schema pour "Profil enfant"
